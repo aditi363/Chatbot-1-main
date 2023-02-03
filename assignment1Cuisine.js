@@ -32,6 +32,7 @@ module.exports = class CuisineOrder extends Order{
                 this.sMenu = sInput; 
                 if(this.sMenu== "Parantha")
                 {
+                    this.rate +=30;
                     aReturn.push("Which Parantha would you like Aaloo or Gobhi ?");
                     this.stateCur = OrderState.ITEM1;    
                 }
@@ -54,6 +55,7 @@ module.exports = class CuisineOrder extends Order{
                 }
                 else
                 { 
+                    this.rate +=20;
                     aReturn.push("Would you like Yogurt?");
                     this.stateCur = OrderState.Yogurt;
                 }
@@ -84,7 +86,7 @@ module.exports = class CuisineOrder extends Order{
                     dt.setMinutes(dt.getMinutes() + 20);
                     aReturn.push(`Please pick it up at ${dt.toTimeString()}`);
                 }
-                else if(sInput== "Halwa")
+                else
                 {
                     this.rate += 5;
                     aReturn.push("Thank-you for your order of");
