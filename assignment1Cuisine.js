@@ -5,7 +5,7 @@ const OrderState = Object.freeze({
     MENU:   Symbol("Menu"),
     ITEM1:   Symbol("Item1"),
     ITEM2:  Symbol("Item2"),
-    YOGURT:  Symbol("Yogurt"),
+    YOGURT:  Symbol("Yogurt")
 });
 
 module.exports = class CuisineOrder extends Order{
@@ -15,7 +15,7 @@ module.exports = class CuisineOrder extends Order{
         this.sMenu = "";
         this.sItem1 = "";
         this.sItem2 = "";
-        this.sYogurt = "";
+        this.sYogurt = ""
     }
     handleInput(sInput){
         let aReturn = [];
@@ -38,6 +38,7 @@ module.exports = class CuisineOrder extends Order{
                 }
                 if(this.sMenu== "Saag")
                 {
+                    this.rate +=22;
                     this.stateCur = OrderState.ITEM2;
                     aReturn.push("Would you like Makki Tortila or Roti?");      
                 }
@@ -60,24 +61,27 @@ module.exports = class CuisineOrder extends Order{
                     this.stateCur = OrderState.Yogurt;
                 }
                 break;
+                case OrderState.ITEM2:
+                    this.sType = sInput;            
+                    if(this.sType!= "Makki Tortila" && this.sType!= "Roti")
+                    {
+                        aReturn.push("Please enter valid item");  
+                    }
+                    else
+                    { 
+                        this.rate +=20;
+                        aReturn.push("Would you like Yogurt?");
+                        this.stateCur = OrderState.Yogurt;
+                    }
+                    break;
 
-        case OrderState.YOGURT:
-                this.sType = sInput;
-                if(this.sYogurt== sInput)
-                {
-                    aReturn.push("Good Choice!");   
-                }
-                else{
-                    aReturn.push("Please enter valid input");  
-                }
-                   
-                break;
 
-            case OrderState.sYogurt: 
+                case OrderState.sYogurt: 
                 this.isDone(true);
  
-                if(sInput!= "no")
+                if(sInput= "Yes")
                 {
+                    this.rate += 5;
                     aReturn.push("Thank-you for your order of");
                     aReturn.push(`${this.sMenu} ${this.sItem1}`);
                     aReturn.push(`Yogurt: ${this.sYogurt}`);
@@ -88,10 +92,8 @@ module.exports = class CuisineOrder extends Order{
                 }
                 else
                 {
-                    this.rate += 5;
                     aReturn.push("Thank-you for your order of");
                     aReturn.push(`${this.sItem1} ${this.sItem1} `);
-                    aReturn.push(`Yogurt: ${this.sYogurt}`);
                     aReturn.push(`Total price: $ ${this.rate}`);
                     let dt = new Date(); 
                     dt.setMinutes(dt.getMinutes() + 20);

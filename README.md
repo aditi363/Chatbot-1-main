@@ -1,6 +1,6 @@
 # <a href="https://github.com/rhildred/ES6OrderBot" target="_blank">ES6 Order Bot</a>
 
-I got the user interface for the web from a student of mine, Pat Wilken.
+I got the user interface for the web from Professor of mine, Milap Pancholi.
 
 To run:
 
