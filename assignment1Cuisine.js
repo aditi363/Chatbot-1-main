@@ -23,36 +23,36 @@ module.exports = class CuisineOrder extends Order{
             case OrderState.WELCOMING:
                 this.stateCur = OrderState.MENU;
                 aReturn.push("Welcome to Punjabi Dhaba");
-                aReturn.push("Would you like Parantha or Saag? ");
+                aReturn.push("Would you like Parantha for $20 or Saag for $22? ");
                 
                 this.stateCur = OrderState.MENU;           
                 break;
 
         case OrderState.MENU:    
                 this.sMenu = sInput; 
-                if(this.sMenu== "Parantha")
+                if(this.sMenu.toLowerCase()== "parantha")
                 {
-                    this.rate +=30;
-                    aReturn.push("Which Parantha would you like Aaloo or Gobhi ?");
+                    aReturn.push("Which Parantha would you like Aaloo or Gobhi for $20?");
                     this.stateCur = OrderState.ITEM1;    
                 }
-                else if(this.sMenu== "Saag")
+                else if(this.sMenu.toLowerCase()== "saag")
                 {
                     this.rate +=22;
                     this.stateCur = OrderState.ITEM2;
                     aReturn.push("Would you like Makki Tortila or Roti?");      
                 }
-                else if(this.sMenu!= "Makki Tortila" && "Roti")
+                else if(this.sMenu.toLowerCase()!= "makki Tortila" && "roti forr $10")
                 {  
+                    this.rate +=10;
                     aReturn.push("Please enter valid input");  
                 }      
                 break;
 
         case OrderState.ITEM1:
                 this.sType = sInput;            
-                if(this.sType!= "Aaloo" && this.sType!= "Gobhi")
+                if(this.sType.toLowerCase()!= "aaloo" && this.sType.toLowerCase()!= "gobhi")
                 {
-                    aReturn.push("Please enter Aaloo or Gobhi?");  
+                    aReturn.push("Please enter Aaloo or Gobhi for $20?");  
                 }
                 else
                 { 
@@ -63,7 +63,7 @@ module.exports = class CuisineOrder extends Order{
                 break;
                 case OrderState.ITEM2:
                     this.sType = sInput;            
-                    if(this.sType!= "Makki Tortila" && this.sType!= "Roti")
+                    if(this.sType.toLowerCase()!= "makki Tortila" && this.sType.toLowerCase()!= "roti")
                     {
                         aReturn.push("Please enter either Makki Tortila or Roti"); 
                          
@@ -79,12 +79,11 @@ module.exports = class CuisineOrder extends Order{
 
                 case OrderState.sYogurt: 
                 this.isDone(true);
- 
-                if(sInput= "Yes")
+                if(sInput.toLowerCase()== "yes")
                 {
                     this.rate += 5;
                     aReturn.push("Thank you for your order of");
-                    aReturn.push(`${this.sMenu} ${this.sItem1} ${this.sItem2}`);
+                    aReturn.push(`${this.sMenu} ${this.sItem1}with`);
                     aReturn.push(`Yogurt ${this.sYogurt}`);
                     aReturn.push(`Total price: $ ${this.rate}`);
                     let dt = new Date(); 
