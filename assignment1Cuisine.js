@@ -15,7 +15,7 @@ module.exports = class CuisineOrder extends Order{
         this.sMenu = "";
         this.sItem1 = "";
         this.sItem2 = "";
-        this.sYogurt = ""
+        this.sYogurt = "";
     }
     handleInput(sInput){
         let aReturn = [];
@@ -36,13 +36,13 @@ module.exports = class CuisineOrder extends Order{
                     aReturn.push("Which Parantha would you like Aaloo or Gobhi ?");
                     this.stateCur = OrderState.ITEM1;    
                 }
-                if(this.sMenu== "Saag")
+                else if(this.sMenu== "Saag")
                 {
                     this.rate +=22;
                     this.stateCur = OrderState.ITEM2;
                     aReturn.push("Would you like Makki Tortila or Roti?");      
                 }
-                if(this.sMenu!= "Makki Tortila" && "Roti")
+                else if(this.sMenu!= "Makki Tortila" && "Roti")
                 {  
                     aReturn.push("Please enter valid input");  
                 }      
@@ -65,7 +65,8 @@ module.exports = class CuisineOrder extends Order{
                     this.sType = sInput;            
                     if(this.sType!= "Makki Tortila" && this.sType!= "Roti")
                     {
-                        aReturn.push("Please enter valid item");  
+                        aReturn.push("Please enter either Makki Tortila or Roti"); 
+                         
                     }
                     else
                     { 
@@ -82,9 +83,9 @@ module.exports = class CuisineOrder extends Order{
                 if(sInput= "Yes")
                 {
                     this.rate += 5;
-                    aReturn.push("Thank-you for your order of");
-                    aReturn.push(`${this.sMenu} ${this.sItem1}`);
-                    aReturn.push(`Yogurt: ${this.sYogurt}`);
+                    aReturn.push("Thank you for your order of");
+                    aReturn.push(`${this.sMenu} ${this.sItem1} ${this.sItem2}`);
+                    aReturn.push(`Yogurt ${this.sYogurt}`);
                     aReturn.push(`Total price: $ ${this.rate}`);
                     let dt = new Date(); 
                     dt.setMinutes(dt.getMinutes() + 20);
@@ -93,7 +94,7 @@ module.exports = class CuisineOrder extends Order{
                 else
                 {
                     aReturn.push("Thank-you for your order of");
-                    aReturn.push(`${this.sItem1} ${this.sItem1} `);
+                    aReturn.push(`${this.sMenu} ${this.sItem1} ${this.sItem2} `);
                     aReturn.push(`Total price: $ ${this.rate}`);
                     let dt = new Date(); 
                     dt.setMinutes(dt.getMinutes() + 20);
@@ -103,4 +104,6 @@ module.exports = class CuisineOrder extends Order{
         }
         return aReturn;
     }
+    
+    
 }
