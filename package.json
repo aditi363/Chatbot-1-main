@@ -33,5 +33,6 @@
     ],
     "sourceMaps": true,
     "retainLines": true
-  }
+  },
+  "devDependencies": {}
 }
