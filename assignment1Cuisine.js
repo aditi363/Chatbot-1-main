@@ -2,7 +2,7 @@ const Order = require("./Order");
 
 const OrderState = Object.freeze({
     WELCOMING:   Symbol("Welcoming"),
-    PUSH: Symbol("Push"),
+    PHONE: Symbol("PHONE"),
     MENU:   Symbol("Menu"),
     ITEM1:   Symbol("Item1"),
     ITEM2:  Symbol("Item2"),
@@ -14,8 +14,9 @@ module.exports = class CuisineOrder extends Order{
     constructor(sNumber, sUrl){
         super(sNumber, sUrl);
         this.stateCur = OrderState.WELCOMING;
+        this.sphone="";
+        this.contactNum="";
         this.rate = 0;
-        this.userName="";
         this.sMenu = "";
         this.sItem1 = "";
         this.sItem2 = "";
@@ -25,16 +26,16 @@ module.exports = class CuisineOrder extends Order{
         let aReturn = [];
         switch(this.stateCur){
             case OrderState.WELCOMING:
-                this.stateCur = OrderState.MENU;
+                this.stateCur = OrderState.PHONE;
                 aReturn.push("Welcome to Punjabi Dhaba");
-                aReturn.push("Please enter your name");
+                aReturn.push("Please enter your phone number");
                 break;
 
-            case OrderState.PUSH:
-                this.userName = sInput;
-                var regName = /^[a-zA-Z]+$/;
-                  if(!regName.test(this.contactName))
-                    aReturn.push("This is not a valid name:");
+            case OrderState.PHONE:
+                this.sphone = sInput;
+                var contactNum = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/
+                  if(!contactNum.test(this.sphone))
+                    aReturn.push("This is not a valid number:");
                   else{
                     aReturn.push("Would you like Parantha for $20 or Saag for $22? ");
                     this.stateCur = OrderState.MENU;   
@@ -50,13 +51,13 @@ module.exports = class CuisineOrder extends Order{
                 }
                 else if(this.sMenu.toLowerCase()== "saag")
                 {
-                    this.rate +=22;
+                    this.rate = $22;
                     this.stateCur = OrderState.ITEM2;
                     aReturn.push("Would you like Makki Tortila or Roti?");      
                 }
                 else if(this.sItem2.toLowerCase()!= "makki Tortila" && this.sItem2.toLowerCase()!="roti for $10")
                 {  
-                    this.rate +=10;
+                    this.rate = $10;
                     aReturn.push("Please enter valid input");  
                 }      
                 break;
@@ -69,8 +70,8 @@ module.exports = class CuisineOrder extends Order{
                 }
                 else
                 { 
-                    this.rate +=20;
-                    aReturn.push("Would you like Yogurt?");
+                    this.rate = $20;
+                    aReturn.push("Would you like Yogurt for $5?");
                     this.stateCur = OrderState.Yogurt;
                 }
                 break;
@@ -83,8 +84,8 @@ module.exports = class CuisineOrder extends Order{
                     }
                     else
                     { 
-                        this.rate +=20;
-                        aReturn.push("Would you like Yogurt?");
+                        this.rate = $20;
+                        aReturn.push("Would you like Yogurt for $5?");
                         this.stateCur = OrderState.Yogurt;
                     }
                     break;
@@ -111,7 +112,7 @@ module.exports = class CuisineOrder extends Order{
                     aReturn.push("Please enter yes or no")
                 }
                 aReturn.push(`Please pay for your order here`);
-                    aReturn.push(`${this.sUrl}/payment/${this.userName}/`);  
+                    aReturn.push(`${this.sNumber}/payment/${this.sUrl}/`);  
                 break;
         }
         return aReturn;
@@ -119,7 +120,7 @@ module.exports = class CuisineOrder extends Order{
     renderForm(sTitle = "-1", sAmount = "-1"){
         // your client id should be kept private
         if(sTitle != "-1"){
-          this.sItem = sTitle;
+          this.sItem = sInput;
         }
         if(sAmount != "-1"){
           this.nOrder = this.rate;
@@ -138,7 +139,7 @@ module.exports = class CuisineOrder extends Order{
           <script
             src="https://www.paypal.com/sdk/js?client-id=${sClientID}"> // Required. Replace SB_CLIENT_ID with your sandbox client ID.
           </script>
-          Thank you ${this.userName} for your ${this.sMenu} order of $${this.sItem} for $${this.rate}
+          Thank you ${this.sphone} for your ${this.sMenu} order of $${this.sItem} for $${this.rate}
           <div id="paypal-button-container"></div>
          
           <script>
